@@ -35,7 +35,7 @@ function App() {
                     <MainContent>
                       <Route
                         exact
-                        path="/"
+                        path="/TicTacToe"
                         component={() => (
                           <Home homeContent={data.pgs[0].home[0]} />
                         )}
