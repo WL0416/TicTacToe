@@ -1,0 +1,49 @@
+.modal {
+  font-size: 15px;
+
+  .header {
+    width: 100%;
+    border-bottom: 1px solid gray;
+    font-size: 30px;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .content {
+    width: 100%;
+    padding: 10px 5px;
+  }
+
+  .actions {
+    width: 100%;
+    padding: 10px 5px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+  }
+
+  p {
+    margin-bottom: 20px !important;
+    font-weight: 300;
+    line-height: 1.4em;
+    padding-right: 40px;
+
+    &.disclaimer {
+      font-size: 0.9em;
+      margin-top: 20px;
+    }
+  }
+}
