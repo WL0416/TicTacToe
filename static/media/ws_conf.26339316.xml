@@ -33,7 +33,7 @@
 
 	<main_menu>
 		<pages>
-			<p		name="Home"				u="/"					ico="fa fa-home"		/>
+			<p		name="Home"				u="/TicTacToe"					ico="fa fa-home"		/>
 			<p		name="TTT"				u="/ttt"				ico="fa fa-trophy"		/>
 			<p		name="Info"				u="/info"			    ico="fa fa-info"		/>
 		</pages>
@@ -42,8 +42,8 @@
 <!--	========================	========================	========================	-->
 
 	<header>
-		<head_l_logo	i='images/react_sha.png'		u='/'		/>
-		<site_title		txt='X Tic Tac Toe'				u='/'		/>
+		<head_l_logo	i='images/react_sha.png'		u='/TicTacToe'		/>
+		<site_title		txt='X Tic Tac Toe'				u='/TicTacToe'		/>
 	</header>
 
 <!--	========================	========================	========================	-->
