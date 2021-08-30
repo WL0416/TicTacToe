@@ -20,7 +20,7 @@ router.get("/api/getWsClients", (req, res) => {
 router.post("/api/updateGame", (req, res) => {
   const { name, board, result, to } = req.body;
 
-  console.log(name, board, to);
+  // console.log(name, board, to);
 
   if (wsClients[to] !== undefined) {
     wsClients[to].forEach((client) => {

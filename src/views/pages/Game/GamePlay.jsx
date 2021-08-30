@@ -169,7 +169,7 @@ const GamePlay = () => {
       renderWinGrid,
       playerTypeValue
     );
-    console.log(result);
+    // console.log(result);
 
     if (result[0]) {
       setGameStatValue("Opponent Wins");
