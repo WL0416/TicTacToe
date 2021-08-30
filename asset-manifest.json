@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/TicTacToe/static/css/main.d4b24060.chunk.css",
-    "main.js": "/TicTacToe/static/js/main.1285cb3e.chunk.js",
-    "main.js.map": "/TicTacToe/static/js/main.1285cb3e.chunk.js.map",
-    "runtime-main.js": "/TicTacToe/static/js/runtime-main.0586618d.js",
-    "runtime-main.js.map": "/TicTacToe/static/js/runtime-main.0586618d.js.map",
+    "main.css": "/TicTacToe/static/css/main.19b78ba4.chunk.css",
+    "main.js": "/TicTacToe/static/js/main.af9fd56e.chunk.js",
+    "main.js.map": "/TicTacToe/static/js/main.af9fd56e.chunk.js.map",
+    "runtime-main.js": "/TicTacToe/static/js/runtime-main.2c95f1d8.js",
+    "runtime-main.js.map": "/TicTacToe/static/js/runtime-main.2c95f1d8.js.map",
     "static/css/2.450bcdb5.chunk.css": "/TicTacToe/static/css/2.450bcdb5.chunk.css",
-    "static/js/2.66c03838.chunk.js": "/TicTacToe/static/js/2.66c03838.chunk.js",
-    "static/js/2.66c03838.chunk.js.map": "/TicTacToe/static/js/2.66c03838.chunk.js.map",
-    "static/js/3.d5ab14ba.chunk.js": "/TicTacToe/static/js/3.d5ab14ba.chunk.js",
-    "static/js/3.d5ab14ba.chunk.js.map": "/TicTacToe/static/js/3.d5ab14ba.chunk.js.map",
+    "static/js/2.2b320091.chunk.js": "/TicTacToe/static/js/2.2b320091.chunk.js",
+    "static/js/2.2b320091.chunk.js.map": "/TicTacToe/static/js/2.2b320091.chunk.js.map",
+    "static/js/3.7ee8414d.chunk.js": "/TicTacToe/static/js/3.7ee8414d.chunk.js",
+    "static/js/3.7ee8414d.chunk.js.map": "/TicTacToe/static/js/3.7ee8414d.chunk.js.map",
     "index.html": "/TicTacToe/index.html",
     "static/css/2.450bcdb5.chunk.css.map": "/TicTacToe/static/css/2.450bcdb5.chunk.css.map",
-    "static/css/main.d4b24060.chunk.css.map": "/TicTacToe/static/css/main.d4b24060.chunk.css.map",
-    "static/js/2.66c03838.chunk.js.LICENSE.txt": "/TicTacToe/static/js/2.66c03838.chunk.js.LICENSE.txt",
+    "static/css/main.19b78ba4.chunk.css.map": "/TicTacToe/static/css/main.19b78ba4.chunk.css.map",
+    "static/js/2.2b320091.chunk.js.LICENSE.txt": "/TicTacToe/static/js/2.2b320091.chunk.js.LICENSE.txt",
     "static/media/K_logo.2165522f.png": "/TicTacToe/static/media/K_logo.2165522f.png",
     "static/media/tic_tac_toe.5421b5a0.png": "/TicTacToe/static/media/tic_tac_toe.5421b5a0.png",
     "static/media/ws_conf.26339316.xml": "/TicTacToe/static/media/ws_conf.26339316.xml"
   },
   "entrypoints": [
-    "static/js/runtime-main.0586618d.js",
+    "static/js/runtime-main.2c95f1d8.js",
     "static/css/2.450bcdb5.chunk.css",
-    "static/js/2.66c03838.chunk.js",
-    "static/css/main.d4b24060.chunk.css",
-    "static/js/main.1285cb3e.chunk.js"
+    "static/js/2.2b320091.chunk.js",
+    "static/css/main.19b78ba4.chunk.css",
+    "static/js/main.af9fd56e.chunk.js"
   ]
 }
