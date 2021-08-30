@@ -32,7 +32,7 @@ global.wsClients = {};
 app.wsClients = wsClients;
 
 // 建立websocket
-app.ws("/ws/:wid", (ws, req) => {
+app.ws("/:wid", (ws, req) => {
   // console.log(req.params.wid);
   if (!wsClients[req.params.wid]) {
     wsClients[req.params.wid] = [];
@@ -47,6 +47,10 @@ app.ws("/ws/:wid", (ws, req) => {
       delete wsClients[req.params.wid];
     }
   });
+
+  ws.on("message", (msg) => {
+    ws.send(msg);
+  });
 });
 
 setInterval(() => {
@@ -55,7 +59,7 @@ setInterval(() => {
     console.log(key, ":", wsClients[key].length);
   });
   console.log("-----------------------------");
-}, 5000);
+}, 10000);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

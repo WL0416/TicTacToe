@@ -4,6 +4,10 @@ import rand_arr_elem from "../../../utils/rand_arr_elem";
 // import rand_to_fro from "../../../utils/rand_to_fro";
 import { Context } from "../../../data/context";
 import gsap from "gsap";
+import axios from "axios";
+import info from "../../../data/info.json";
+import SocketClient from "../../../utils/SocketClient";
+import simplePost from "../../../utils/simplePost";
 
 const GamePlay = () => {
   const winSets = [
@@ -38,23 +42,70 @@ const GamePlay = () => {
     gamePlay,
     nextTurnPlay,
     gameStat,
+    playerType,
+    playerSocket,
+    playerNumber,
+    gameRoom,
+    win,
   } = useContext(Context);
 
   const [nameValue, setNameValue] = name;
+
   const [gameTypeValue, setGameTypeValue] = gameType;
+  // eslint-disable-next-line
   const [gameStepValue, setGameStepValue] = gameStep;
   const [gameBoardValue, setGameBoardValue] = gameBoard;
   const [gamePlayValue, setGamePlayValue] = gamePlay;
   const [nextTurnPlayValue, setNextTurnPlayValue] = nextTurnPlay;
   const [gameStatValue, setGameStatValue] = gameStat;
+  const [playerTypeValue] = playerType;
+  const [playerSocketValue, setPlayerSocketValue] = playerSocket;
+  const [playerNumberValue, setPlayerNumberValue] = playerNumber;
+  const [gameRoomValue, setGameRoomValue] = gameRoom;
+  const [winValue, setWinValue] = win;
 
+  /* eslint-disable */
   useEffect(() => {
     if (gameTypeValue !== "live") {
+      setGamePlayValue(!gamePlayValue);
       if (!gameStatValue) setGameStatValue("Start Game");
-      checkWin();
+      checkWin(
+        winSets,
+        gameBoardValue,
+        setGameStatValue,
+        setGamePlayValue,
+        renderWinGrid,
+        playerTypeValue
+      );
     } else {
-      setGameStatValue("Connecting");
-      setGamePlayValue(false);
+      if (!playerSocketValue) {
+        setGameStatValue("Connecting...");
+        setGamePlayValue(false);
+        setGameStatValue("Waiting...");
+        axios
+          .get(info.getWebSocketClients)
+          .then((response) => {
+            const clients = Object.values(response.data);
+            setPlayerSocketValue(
+              SocketClient(
+                clients,
+                playerType,
+                playerNumber,
+                gamePlay,
+                gameBoard,
+                gameRoom,
+                name,
+                nextTurnPlay,
+                gameStat,
+                win
+              )
+            );
+          })
+          .catch((err) => {
+            setGameStatValue("Something went wrong...");
+            console.log(err);
+          });
+      }
     }
 
     gsap.from("#game_stat", {
@@ -78,39 +129,83 @@ const GamePlay = () => {
     });
   }, []);
 
-  useEffect(() => {}, [nextTurnPlayValue]);
+  useEffect(() => {
+    if (winValue) {
+      checkWin(
+        winSets,
+        gameBoardValue,
+        setGameStatValue,
+        setGamePlayValue,
+        renderWinGrid,
+        playerTypeValue
+      );
+    }
+  }, [nextTurnPlayValue, playerNumberValue, winValue]);
+  /* eslint-disable */
 
   const clickCell = (e) => {
-    // setNextTurnPlayValue(!nextTurnPlayValue);
     if (!nextTurnPlayValue || !gamePlayValue) return;
 
     const cellId = e.target.id.substr(11);
 
-    if (gameBoardValue[cellId]) return;
+    if (gameBoardValue[cellId] || !cellId) return;
 
-    if (gameTypeValue !== "live") {
-      playerTurnWithComp(cellId);
-    } else {
-      playerTurnWithLive(cellId);
-    }
-
+    playerTurn(cellId);
     setNextTurnPlayValue(false);
 
-    checkTurn();
+    if (gameTypeValue === "live") {
+      liveCheckTurn();
+    } else {
+      checkTurn();
+    }
+  };
+
+  const liveCheckTurn = () => {
+    const result = checkWin(
+      winSets,
+      gameBoardValue,
+      setGameStatValue,
+      setGamePlayValue,
+      renderWinGrid,
+      playerTypeValue
+    );
+    console.log(result);
+
+    if (result[0]) {
+      setGameStatValue("Opponent Wins");
+      setWinValue(true);
+    } else if (result[1]) {
+      setGameStatValue("Draw");
+      setGamePlayValue(false);
+    }
+
+    simplePost(info.exchangeData, {
+      name: nameValue,
+      board: gameBoardValue,
+      result,
+      to: gameRoomValue,
+    });
   };
 
   const endGame = () => {
     setNameValue("");
     setGameTypeValue("");
     setGameStepValue("set_name");
-    setGamePlayValue(true);
+    setGamePlayValue(false);
     setGameBoardValue({});
     setNextTurnPlayValue(true);
-    setGameStatValue("Start Game");
+    setGameStatValue("");
+    if (gameTypeValue === "live") {
+      playerSocketValue.close();
+      setPlayerSocketValue(null);
+      setPlayerNumberValue(0);
+      setGameRoomValue(1);
+      setWinValue(false);
+    }
   };
 
-  const playerTurnWithComp = (cellId) => {
-    gameBoardValue[cellId] = "x";
+  const playerTurn = (cellId) => {
+    gameBoardValue[cellId] = playerTypeValue;
 
     gsap.from(`#game_board-${cellId}`, {
       duration: 0.3,
@@ -120,13 +215,6 @@ const GamePlay = () => {
       scaleY: 0,
       ease: "power4.out",
     });
-
-    setGameBoardValue(gameBoardValue);
-  };
-
-  const playerTurnWithLive = (cellId) => {
-    gameBoardValue[cellId] = "x";
-    setGameBoardValue(gameBoardValue);
   };
 
   const compTurn = () => {
@@ -147,9 +235,15 @@ const GamePlay = () => {
       ease: "power4.out",
     });
 
-    setGameBoardValue(gameBoardValue);
     setNextTurnPlayValue(true);
-    checkWin();
+    checkWin(
+      winSets,
+      gameBoardValue,
+      setGameStatValue,
+      setGamePlayValue,
+      renderWinGrid,
+      playerTypeValue
+    );
   };
 
   const renderWinGrid = (set) => {
@@ -162,39 +256,15 @@ const GamePlay = () => {
     }
   };
 
-  const checkWin = () => {
-    let set;
-    let win = false;
-    let fin = true;
-    for (let i = 0; !win && i < winSets.length; i++) {
-      set = winSets[i];
-
-      if (
-        gameBoardValue[set[0]] &&
-        gameBoardValue[set[0]] === gameBoardValue[set[1]] &&
-        gameBoardValue[set[0]] === gameBoardValue[set[2]]
-      )
-        win = true;
-    }
-
-    for (let i = 1; i <= 9; i++) !gameBoardValue["c" + i] && (fin = false);
-
-    if (win) {
-      setGameStatValue(
-        (gameBoardValue[set[0]] === "x" ? "You" : "Opponent") + " win"
-      );
-      setGamePlayValue(false);
-      renderWinGrid(set);
-    } else if (fin) {
-      setGameStatValue("Draw");
-      setGamePlayValue(false);
-    }
-
-    return [win, fin];
-  };
-
   const checkTurn = () => {
-    const [win, fin] = checkWin();
+    const [win, fin] = checkWin(
+      winSets,
+      gameBoardValue,
+      setGameStatValue,
+      setGamePlayValue,
+      renderWinGrid,
+      playerTypeValue
+    );
     // console.log(win);
     setTimeout(() => {
       if (!win && !fin) {
@@ -313,3 +383,41 @@ const GamePlay = () => {
 };
 
 export default GamePlay;
+
+export const checkWin = (
+  winSets,
+  gameBoardValue,
+  setGameStatValue,
+  setGamePlayValue,
+  renderWinGrid,
+  playerTypeValue
+) => {
+  let set;
+  let win = false;
+  let fin = true;
+  for (let i = 0; !win && i < winSets.length; i++) {
+    set = winSets[i];
+
+    if (
+      gameBoardValue[set[0]] &&
+      gameBoardValue[set[0]] === gameBoardValue[set[1]] &&
+      gameBoardValue[set[0]] === gameBoardValue[set[2]]
+    )
+      win = true;
+  }
+
+  for (let i = 1; i <= 9; i++) !gameBoardValue["c" + i] && (fin = false);
+
+  if (win) {
+    setGameStatValue(
+      (gameBoardValue[set[0]] === playerTypeValue ? "You" : "Opponent") + " win"
+    );
+    setGamePlayValue(false);
+    renderWinGrid(set);
+  } else if (fin) {
+    setGameStatValue("Draw");
+    setGamePlayValue(false);
+  }
+
+  return [win, fin];
+};

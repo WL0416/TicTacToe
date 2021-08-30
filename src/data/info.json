@@ -1,0 +1,5 @@
+{
+  "getWebSocketClients": "http://localhost:3001/api/getWsClients",
+  "prefixWS": "ws://localhost:3001/",
+  "exchangeData": "http://localhost:3001/api/updateGame"
+}

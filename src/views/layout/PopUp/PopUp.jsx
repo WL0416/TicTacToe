@@ -9,6 +9,7 @@ const PopUp = (props) => {
 
   //  console.log(popupTitle, popupContent);
 
+  /* eslint-disable */
   return (
     <Popup trigger={<a>{popupTitle}</a>} modal nested>
       {(close) => {
@@ -44,7 +45,7 @@ const PopUp = (props) => {
     </Popup>
   );
 };
-
+/* eslint-disable */
 PopUp.propTypes = {
   pageTitle: PropTypes.string,
   popupContent: PropTypes.any,

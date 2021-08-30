@@ -3,7 +3,7 @@ import { Context } from "../../../data/context";
 
 const SetName = () => {
   const { name, gameStep } = useContext(Context);
-
+  // eslint-disable-next-line
   const [gameStepValue, setGameStepValue] = gameStep;
   const [nameValue, setNameValue] = name;
 

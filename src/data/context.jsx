@@ -11,10 +11,15 @@ const Provider = (props) => {
   const [name, setName] = useState("");
   const [gameStep, setGameStep] = useState("set_name");
   const [gameType, setGameType] = useState("");
-  const [gamePlay, setGamePlay] = useState(true);
+  const [gamePlay, setGamePlay] = useState(false);
   const [gameBoard, setGameBoard] = useState({});
   const [nextTurnPlay, setNextTurnPlay] = useState(true);
   const [gameStat, setGameStat] = useState("");
+  const [playerType, setPlayerType] = useState("x");
+  const [playerSocket, setPlayerSocket] = useState(null);
+  const [playerNumber, setPlayerNumber] = useState(0);
+  const [gameRoom, setGameRoom] = useState("1");
+  const [win, setWin] = useState(false);
 
   useEffect(() => {
     axios
@@ -39,6 +44,11 @@ const Provider = (props) => {
         gamePlay: [gamePlay, setGamePlay],
         nextTurnPlay: [nextTurnPlay, setNextTurnPlay],
         gameStat: [gameStat, setGameStat],
+        playerType: [playerType, setPlayerType],
+        playerSocket: [playerSocket, setPlayerSocket],
+        playerNumber: [playerNumber, setPlayerNumber],
+        gameRoom: [gameRoom, setGameRoom],
+        win: [win, setWin],
       }}
     >
       {props.children}

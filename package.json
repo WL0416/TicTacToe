@@ -18,6 +18,7 @@
     "reactjs-popup": "^2.0.5",
     "validator": "5.4.0",
     "web-vitals": "^1.0.1",
+    "websocket": "^1.0.34",
     "xml2js": "^0.4.23"
   },
   "scripts": {

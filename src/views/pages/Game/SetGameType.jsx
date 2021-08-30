@@ -4,7 +4,9 @@ import { Context } from "../../../data/context";
 const SetGameType = () => {
   const { gameType, gameStep } = useContext(Context);
 
+  // eslint-disable-next-line
   const [gameTypeValue, setGameTypeValue] = gameType;
+  // eslint-disable-next-line
   const [gameStepValue, setGameStepValue] = gameStep;
 
   //   console.log(gameTypeValue);
