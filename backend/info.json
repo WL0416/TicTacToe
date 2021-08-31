@@ -1,0 +1,7 @@
+{
+  "emailService": "gmail",
+  "emailHost": "smtp.gmail.com",
+  "emailPort": 465,
+  "emailUser": "liweisupertest@gmail.com",
+  "emailPass": ""
+}

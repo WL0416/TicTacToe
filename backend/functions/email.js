@@ -1,13 +1,14 @@
 const nodemailer = require("nodemailer");
+const info = require("../info.json");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
+  service: info.emailService,
+  host: info.emailHost,
   secure: true,
-  port: 465,
+  port: info.emailPort,
   auth: {
-    user: "liweisupertest@gmail.com",
-    pass: "",
+    user: info.emailUser,
+    pass: info.emailPass,
   },
 });
 
@@ -15,7 +16,7 @@ const emailSender = (request, response) => {
   const { name, email, subject, message } = request.body;
   const mailOptions = {
     from: `'${name}' <${email}>`,
-    to: "liweisupertest@gmail.com",
+    to: info.emailUser,
     subject: `${subject}`,
     html: `${message}`,
   };
